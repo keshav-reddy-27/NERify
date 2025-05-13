@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NER Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function getEntities() {
+            let text = document.getElementById("text-input").value;
+            let response = await fetch("/", {
+                method: "POST",
+                body: new URLSearchParams({ "text": text }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            });
+            let result = await response.json();
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "<h3>Recognized Entities:</h3>";
+            result.forEach(([word, label]) => {
+                outputDiv.innerHTML += `<p><b>${word}</b> - ${label}</p>`;
+            });
+        }
+        function display(sectionId) {
+            const sections = ['sectionHome', 'sectionAbout','sectionContact'];
+            sections.forEach(id => {
+              document.getElementById(id).style.display = id === sectionId ? 'block' : 'none';
+            });
+          }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div id="sectionHome">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="top">
+                <img src="E:\Nlp project-3\logo.webp" alt="Logo" class="logo" height="100" width="100">
+                <h1 class="heading">NERify</h1>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-column justify-content-center">
+                <div >
+                  <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true" onclick="display('sectionHome')">Home</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="display('sectionAbout')">About</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="display('sectionContact')">Contact</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+    
+              <div>
+                <h1>Named Entity Recognition</h1>
+                <textarea id="text-input" placeholder="Enter text here..." class="form-control mb-3" rows="4"></textarea>
+                <button class="btn btn-primary analyze_button" onclick="getEntities()">Analyze</button>
+                <div id="output"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Section: About -->
+      <div id="sectionAbout" style="display: none;">
+        <div class="container">
+          <h1 class="About">About the project!</h1>
+          <div class="title">
+            <h1 class="about_Ner_title">NERify</h1>
+    
+          </div>
+          <div class="para">
+            <p class="text-white fs-5" style="color: #002B2E;">
+            NERify is a lightweight Named Entity Recognition (NER) web application that identifies entities such as 
+            <span class="text-info">Persons</span>, 
+            <span class="text-warning">Organizations</span>, and 
+            <span class="text-success">Locations</span> 
+            from input text.
+          </p>
+          <p class="text-white fs-5">
+            Built using <strong>DistilBERT</strong> and fine-tuned on the CoNLL-2003 dataset, NERify offers real-time predictions through a simple and clean interface. 
+            The backend is powered by <strong>Flask</strong>, while the frontend uses <strong>Bootstrap</strong> for responsive design.
+          </p>
+          <p class="text-white fs-5">
+            Whether you're exploring NLP or integrating NER into your projects, NERify provides a hands-on demo to get you started!
+          </p>
+        </div>
+          <div class="button_column mt-4">
+            <button class="butt" onclick="display('sectionHome')">← Back to Home</button>
+          </div>
+        </div>
+        </div>
+        <!--section of contact-->
+      <div id="sectionContact" style="display: none;">
+        <div class="container">
+          <div class="d-flex flex-row justify-content-center">
+            <h1 class="contactSection_heading">Project Developers</h1>
+          </div>
+          <div class = "d-flex flex-row justify-content-center mt-5">
+            <div class="card-container d-flex flex-row">
+                <div >
+                  <h1 class="card-heading">A. SAI KRISHNA</h1>
+                  <p class="card-description">
+                    Worked on model Training and understanding the dataset.
+                  </p>
+                </div>
+                
+            </div>
+            <div class="card-container d-flex flex-row ml-3">
+                <div>
+                  <h1 class="card-heading">A. SRIKANTH</h1>
+                  <p class="card-description">
+                    Worked on model Training and understanding the dataset.
+                  </p>
+                </div>
+                
+            </div>
+
+        </div>
+        <div class = "d-flex flex-row justify-content-center mt-5">
+            <div class="card-container d-flex flex-row">
+                <div >
+                  <h1 class="card-heading">ARUSHI PATEL</h1>
+                  <p class="card-description">
+                    Worked on model Training and understanding the dataset.
+                  </p>
+                </div>
+                
+            </div>
+            <div class="card-container d-flex flex-row ml-3">
+                <div>
+                  <h1 class="card-heading">A. RESHMITHA</h1>
+                  <p class="card-description">
+                    Worked on model Training and understanding the dataset.
+                  </p>
+                </div>
+                
+            </div>
+
+        </div>
+        <div class = "d-flex flex-row justify-content-center mt-5">
+            <div class="card-container d-flex flex-row">
+                <div >
+                  <h1 class="card-heading">B.KESHAVARDHAN REDDY</h1>
+                  <p class="card-description">
+                    Worked on model Training and understanding the dataset.
+                  </p>
+                </div>
+                
+            </div>
+            
+
+        </div>
+          <div class="button_column mt-4">
+            <button class="butt" onclick="display('sectionHome')">← Back to Home</button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
